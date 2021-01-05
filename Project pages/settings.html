@@ -1,0 +1,138 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: rgba(0, 0, 0, 0.849);
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            user-select: none;
+            color: white;
+            margin: auto;
+        }
+        
+        *::-webkit-scrollbar {
+            width: 0.3em;
+        }
+        
+        *::-webkit-scrollbar-thumb {
+            background-color: darkgrey;
+            outline: 1px solid slategrey;
+            border-radius: 10px;
+            outline: none;
+        }
+        
+        fieldset {
+            margin: auto;
+            width: 50%;
+            margin-top: 50px;
+            height: auto;
+            font-size: 18px;
+        }
+        
+        #strm,
+        #plb,
+        #volu,
+        #info,
+        #prof {
+            padding: 5px 30px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        
+        #username {
+            font-size: 26px;
+        }
+        
+        #st {
+            outline: none;
+            background-color: transparent;
+            color: white;
+            width: 150px;
+            height: auto;
+            padding: 6px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        
+        #st>option {
+            background-color: rgba(0, 0, 0, 0.849);
+            color: white;
+            width: 150px;
+            height: auto;
+            padding: 10px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        
+        .smalltxt {
+            opacity: 0.9;
+            font-size: 14px;
+            color: lightgray;
+        }
+        
+        legend {
+            font-size: 20px;
+            padding: 0px 10px 0px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Settings</h1>
+    <fieldset>
+        <legend>Proflie</legend>
+        <div id="prof">
+            <p>
+                <span class="smalltxt">Signed in as</span><br>
+                <a href="profile.html"><span id="username">Mahesh Kantariya</span></a>
+            </p>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Audio Quality</legend>
+        <div id="strm">
+            <label for="st">Streaming</label>
+            <select id="st">
+            <option value="Low">Low</option>
+            <option value="Normal" selected>Normal</option>
+            <option value="High">High</option>
+        </select><br><br><input type="checkbox"> Datasaver&nbsp; <span class="smalltxt">listen in low network</span>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Playback</legend>
+        <div id="plb">
+            <input id='aplay' type="checkbox"> AutoPlay &nbsp;&nbsp;<span class="smalltxt">Play next track automatically</span>
+            <br><br>
+            <input id='aplay' type="checkbox"> Normalize Volume &nbsp;&nbsp;<span class='smalltxt'>Set same volume level for all tracks</span>
+        </div>
+    </fieldset>
+    <fieldset id="abo">
+        <legend>About</legend>
+        <div id="info">
+            <p>Version&nbsp;&nbsp;<span class="smalltxt"> 0.0.1</span></p>
+            <p>Terms and Conditions&nbsp;&nbsp;</p>
+            <p>Privacy Policy&nbsp;&nbsp;</p>
+        </div>
+    </fieldset>
+    <br><br>
+    <script>
+        var slider = document.getElementById("slider");
+        var output = document.getElementById("val");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+            output.innerHTML = this.value;
+        }
+    </script>
+</body>
+
+</html>
