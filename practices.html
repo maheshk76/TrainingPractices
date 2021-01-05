@@ -3,11 +3,158 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <!-- <script src="jquery-latest.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="jquery-latest.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            //sec-8 code
+            var sec8 = $("[id^=sec8-]");
+
+            function loadAni() {
+                $(sec8[0]).animate({
+                    width: 400
+                }, 100, function() {
+                    $(sec8[1]).animate({
+                        width: 400
+                    }, 100, function() {
+                        $(sec8[2]).animate({
+                            width: 400
+                        }, 100, function() {
+                            $(sec8[0]).animate({
+                                width: 300
+                            }, 100, function() {
+                                $(sec8[1]).animate({
+                                    width: 300
+                                }, 100, function() {
+                                    $(sec8[2]).animate({
+                                        width: 300
+                                    }, 100);
+                                });
+                            });
+                        });
+                    });
+                });
+            }
+            $("#loadbut").on("click", function() {
+                x = setInterval(loadAni, 1000);
+            });
+            $("#stopbut").on("click", function() {
+                clearInterval(x);
+            });
+            //calc code
+            var btns = document.querySelectorAll("table button");
+            var calscreen = document.getElementById("calscreen");
+            btns.forEach(btn => {
+                btn.addEventListener('click', event => {
+                    var con = btn.innerHTML;
+                    if (con == 'C') {
+                        calscreen.value = "";
+                    } else if (con == "Del") {
+                        calscreen.value = calscreen.value.slice(0, calscreen.value.length - 1);
+                    } else if (con == "=") {
+                        calscreen.value = eval(calscreen.value);
+                    } else {
+                        calscreen.value += con;
+                    }
+                });
+
+            });
+            //green divs code
+            $("#button1").click(function() {
+                $("#div1").toggle(500);
+                $("#div2").toggle(1000);
+                $("#div3").toggle(1500, function() {
+                    alert("Alerted after animattion completed");
+                });
+
+            });
+            $("#button2").on("click", function() {
+
+                $("#div1").fadeIn(500);
+                $("#div2").fadeIn(1000);
+                $("#div3").fadeIn(1500);
+            });
+            $("#button3").on("click", function() {
+
+                $("#div1").fadeOut(500);
+                $("#div2").fadeOut(1000);
+                $("#div3").fadeOut(1500);
+            });
+            $("#button4").click(function() {
+
+                $("#div1").css("backgroundColor", "red")
+                    .fadeOut(1000).fadeIn(1000).fadeOut(1000).fadeIn(1000).fadeOut(1000).fadeIn(1000)
+                    .fadeOut(1000).fadeIn(1000);
+            });
+
+        });
+
+
+        function createNew() {
+            var x = document.createElement("p");
+            var sec3 = document.getElementById("sec3");
+            x.innerHTML = "this is created paragraph";
+            sec3.appendChild(x);
+
+        }
+
+        function replace() {
+            x = document.querySelector("#sec3 > p");
+            y = document.createElement("p");
+            y.innerHTML = "this is replaced paragraph";
+            sec3.replaceChild(y, x);
+        }
+
+        function checkPassword(form) {
+
+            password1 = form.psw1.value;
+            password2 = form.psw2.value;
+            var x = document.getElementById("mypass1");
+            var y = document.getElementById("mypass2")
+            if (password1 != password2) {
+                x.style.borderBottom = "2px solid rgba(250,10,10,0.7)";
+                y.style.borderBottom = "2px solid rgba(250,10,10,0.7)";
+                document.getElementById("error").innerHTML = "<i class='fa fa-exclamation-circle'></i> passwords should be match";
+                return false;
+            } else {
+                x.style.borderBottom = "2px solid lightgrey";
+                y.style.borderBottom = "2px solid lightgrey";
+                document.getElementById("error").innerHTML = "";
+                return true;
+            }
+        }
+
+        function showHidepass() {
+            var pass1 = document.getElementById("mypass1");
+            var pass2 = document.getElementById("mypass2");
+            if (pass1.type === "password" && pass2.type == "password") {
+                pass1.type = "text";
+                pass2.type = "text";
+                document.getElementById('hideshow1').innerHTML = '<i class="material-icons" style="color:orange">visibility</i>';
+            } else {
+                pass1.type = "password";
+                pass2.type = "password";
+                document.getElementById('hideshow1').innerHTML = '<i class="material-icons"style="color:lightgrey">visibility_off</i>';
+            }
+        }
+
+        function openModal() {
+            var b = document.getElementById("open-modal");
+            var mod = document.getElementById('id02');
+            if (mod.style.display == "none") {
+                mod.style.display = 'block';
+                b.innerHTML = "Close Modal";
+            } else {
+                mod.style.display = "none";
+                b.innerHTML = "Open Modal";
+            }
+            document.getElementById('id02').style.overflow = 'auto';
+
+        }
+    </script>
     <style>
         #sec6 {
             width: 100%;
@@ -16,14 +163,20 @@
             text-align: center;
         }
         
+        #sec7 {
+            transition: 0.3s;
+            height: auto;
+        }
+        
         #div1,
         #div2,
         #div3 {
+            margin: auto;
             width: 150px;
             height: 150px;
             background-color: greenyellow;
             margin-top: 10px;
-            margin-left: 50%;
+            transition: 0.3s;
         }
         
         #fs1 input {
@@ -117,10 +270,11 @@
         }
         
         body {
-            background-image: url("download.jpg");
+            background: url(download.jpg);
             background-repeat: no-repeat;
             background-size: cover;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
         }
         
         #sec3 {
@@ -137,7 +291,7 @@
             overflow: hidden;
         }
         
-        #txta {
+        #calscreen {
             width: 99%;
             height: 15%;
             position: relative;
@@ -163,7 +317,7 @@
             margin: auto;
         }
         
-        #openm,
+        #open-modal,
         #but3,
         #but4 {
             height: 30px;
@@ -172,6 +326,7 @@
         }
         
         .modal {
+            position: absolute;
             margin: auto;
             display: none;
             /* Hidden by default */
@@ -183,12 +338,12 @@
             /* Full width */
             height: 50vw;
             /* Full height */
-            overflow: auto;
+            overflow: hidden;
             /* Enable scroll if needed */
-            background-color: rgba(0, 0, 0, 0.5);
             /* Black w/ opacity */
             padding-top: 50px;
             font-size: 90%;
+            transition: 0.2s;
         }
         
         #hideshow1 {
@@ -312,10 +467,50 @@
         #formloginbutton:focus {
             transform: scale(0.95);
         }
+        
+        #sec8 {
+            position: relative;
+            text-align: center;
+            height: auto;
+        }
+        
+        [id^=sec8-] {
+            margin: auto;
+            width: 300px;
+            height: 10px;
+            background-color: #2ea5f563;
+            margin-top: 10px;
+            transition: 0.2s;
+            position: relative;
+            text-align: center;
+        }
+        
+        button:not(#formloginbutton) {
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            background-color: #c2eb9d;
+            font-size: 15px;
+            padding: 7px;
+            box-shadow: 1px 2px 12px #cccccc;
+            transition: 0.1s;
+        }
+        
+        button:not(#formloginbutton):active {
+            transform: scale(0.9);
+        }
     </style>
 </head>
 
 <body>
+    <div id="sec8">
+        <button id="loadbut">Load</button>
+        <button id="stopbut">Stop</button>
+        <div id="sec8-div1"></div>
+        <div id="sec8-div2"></div>
+        <div id="sec8-div3"></div>
+    </div>
+    <hr>
     <section id="sec7">
         <div id="div1">1</div>
         <div id="div2">2</div>
@@ -326,28 +521,29 @@
         <button id="button4">Animate</button>
     </section>
     <hr>
+    <div id="id02" class="modal">
+        <form action="detail.html" method="GET" class="modal-content anima" oninput="return checkPassword(this)" style="width:500px; height:620px;">
+
+            <div class="contains">
+                <label for="uname1"><b>Username</b></label>
+                <input id="getfoc" class="formlogintextbox" type="text" placeholder="Enter Username" name="uname1" required>
+                <label for="umob"><b>Mobile No.</b></label>
+                <input class="formlogintextbox" type="number" placeholder="Enter Mobile" ng-model="umob" ng-pattern="/^[0-9]/" name="umob" maxlength=10 minlength=10 oninput="limit(this)" required>
+                <label for="uemail"><b>Email</b></label>
+                <input class="formlogintextbox" type="email" placeholder="Enter Email" name="uemail" ng-model="uemail" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" required>
+                <label for="psw1"><b>Password</b></label>
+                <input id="mypass1" ng-model="psw1" ng-pattern="/^[0-9]/" class="formlogintextbox" type="password" placeholder="Enter Password" name="psw1" required>
+                <label for="psw2"><b>Confirm Password</b></label>
+                <input id="mypass2" ng-model="psw2" ng-pattern="/^[0-9]/" class="formlogintextbox" type="password" placeholder="Re enter Password" name="psw2" required>
+                <span id="error">.</span><label id="hideshow1" onclick="showHidepass()"><i class="material-icons">visibility_off</i></label>
+                <button id="formloginbutton" type="submit" ng-disabled="regform.$invalid" onclick="OpenVerify()">SignUp</button>
+            </div>
+        </form>
+    </div>
     <section id="sec5">
         <h1>Forms</h1>
-        <button id="openm" style="text-align: center;" onclick="goreg()">Open Modal</button>
-        <div id="id02" class="modal">
-            <form action="detail.html" method="GET" class="modal-content anima" oninput="return checkPassword(this)" style="width:500px; height:620px;">
+        <button id="open-modal" style="text-align: center;" onclick="openModal()">Open Modal</button>
 
-                <div class="contains">
-                    <label for="uname1"><b>Username</b></label>
-                    <input id="getfoc" class="formlogintextbox" type="text" placeholder="Enter Username" name="uname1" required>
-                    <label for="umob"><b>Mobile No.</b></label>
-                    <input class="formlogintextbox" type="number" placeholder="Enter Mobile" ng-model="umob" ng-pattern="/^[0-9]/" name="umob" maxlength=10 minlength=10 oninput="limit(this)" required>
-                    <label for="uemail"><b>Email</b></label>
-                    <input class="formlogintextbox" type="email" placeholder="Enter Email" name="uemail" ng-model="uemail" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" required>
-                    <label for="psw1"><b>Password</b></label>
-                    <input id="mypass1" ng-model="psw1" ng-pattern="/^[0-9]/" class="formlogintextbox" type="password" placeholder="Enter Password" name="psw1" required>
-                    <label for="psw2"><b>Confirm Password</b></label>
-                    <input id="mypass2" ng-model="psw2" ng-pattern="/^[0-9]/" class="formlogintextbox" type="password" placeholder="Re enter Password" name="psw2" required>
-                    <span id="error">.</span><label id="hideshow1" onclick="Toggle1()"><i class="material-icons">visibility_off</i></label>
-                    <button id="formloginbutton" type="submit" ng-disabled="regform.$invalid" onclick="OpenVerify()">SignUp</button>
-                </div>
-            </form>
-        </div>
     </section>
 
     <br>
@@ -372,7 +568,7 @@
     <section id="sec4">
         <h1>Calculator</h1>
         <div>
-            <textarea id="txta"></textarea>
+            <textarea id="calscreen"></textarea>
             <table id="tab1">
                 <tr>
                     <td><button>C</button></td>
@@ -407,121 +603,6 @@
             </table>
         </div>
     </section>
-    <script>
-        $("#button1").on("click", function() {
-            $("#div1").toggle(500);
-            $("#div2").toggle(1000);
-            $("#div3").toggle(1500, function() {
-                alert("Alerted after animattion completed");
-            });
-
-        });
-        $("#button2").on("click", function() {
-
-            $("#div1").fadeIn(500);
-            $("#div2").fadeIn(1000);
-            $("#div3").fadeIn(1500);
-        });
-        $("#button3").on("click", function() {
-
-            $("#div1").fadeOut(500);
-            $("#div2").fadeOut(1000);
-            $("#div3").fadeOut(1500);
-        });
-        $("#button4").click(function() {
-
-            $("#div1").css("backgroundColor", "red")
-                .fadeOut(1000).fadeIn(1000).fadeOut(1000).fadeIn(1000).fadeOut(1000).fadeIn(1000)
-                .fadeOut(1000).fadeIn(1000);
-        });
-
-        function animate() {
-            alert("sdgf")
-            document.getElementById("sub").value = "OK";
-        }
-
-        function createNew() {
-            var x = document.createElement("p");
-            var sec3 = document.getElementById("sec3");
-            x.innerHTML = "this is created paragraph";
-            sec3.appendChild(x);
-
-        }
-
-        function replace() {
-            x = document.querySelector("#sec3 > p");
-            y = document.createElement("p");
-            y.innerHTML = "this is replaced paragraph";
-            sec3.replaceChild(y, x);
-        }
-
-        function checkPassword(form) {
-
-            password1 = form.psw1.value;
-            password2 = form.psw2.value;
-            var x = document.getElementById("mypass1");
-            var y = document.getElementById("mypass2")
-            if (password1 != password2) {
-                x.style.borderBottom = "2px solid rgba(250,10,10,0.7)";
-                y.style.borderBottom = "2px solid rgba(250,10,10,0.7)";
-                document.getElementById("error").innerHTML = "<i class='fa fa-exclamation-circle'></i> passwords should be match";
-                return false;
-            } else {
-                x.style.borderBottom = "border-bottom", "2px solid lightgrey";
-                y.style.borderBottom = "border-bottom", "2px solid lightgrey";
-                document.getElementById("error").innerHTML = "";
-                return true;
-            }
-        }
-
-        function Toggle1() {
-            var temp1 = document.getElementById("mypass1");
-            var temp2 = document.getElementById("mypass2");
-            if (temp1.type === "password" && temp2.type == "password") {
-                temp1.type = "text";
-                temp2.type = "text";
-                document.getElementById('hideshow1').innerHTML = '<i class="material-icons" style="color:orange">visibility</i>';
-            } else {
-                temp1.type = "password";
-                temp2.type = "password";
-                document.getElementById('hideshow1').innerHTML = '<i class="material-icons"style="color:lightgrey">visibility_off</i>';
-            }
-        }
-
-        function goreg() {
-            var b = document.getElementById("openm");
-            var mod = document.getElementById('id02');
-            if (mod.style.display == "none") {
-                mod.style.display = 'block';
-                b.innerHTML = "Close Modal";
-            } else {
-                mod.style.display = "none";
-                b.innerHTML = "Open Modal";
-            }
-            document.getElementById('id02').style.overflow = 'auto';
-
-        }
-    </script><br>
-    <script>
-        var btns = document.querySelectorAll("table button");
-        var txta = document.getElementById("txta");
-        btns.forEach(btn => {
-            btn.addEventListener('click', event => {
-                var con = btn.innerHTML;
-                if (con == 'C') {
-                    txta.value = "";
-                } else if (con == "Del") {
-                    txta.value = txta.value.slice(0, txta.value.length - 1);
-                } else if (con == "=") {
-                    txta.value = eval(txta.value);
-                } else {
-                    txta.value += con;
-                }
-            });
-
-        });
-    </script>
-    <hr>
 </body>
 
 </html>
