@@ -2,6 +2,8 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         body {
             background-color: rgba(0, 0, 0, 0.849);
@@ -81,11 +83,49 @@
             text-align: center;
             margin-top: 40px;
         }
+        
+        input,
+        select {
+            float: right;
+        }
+        
+        .notifier {
+            width: fit-content;
+            height: auto;
+            border-radius: 5px;
+            background-color: rgba(76, 235, 76, 0.658);
+            padding: 10px;
+            margin: auto;
+            position: fixed;
+            right: -100;
+            visibility: hidden;
+            transition: .3s;
+        }
     </style>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('input,select').change(function() {
+                $(".notifier").css({
+                    "right": "10",
+                    "visibility": "visible"
+                });
+
+                function hide() {
+                    $(".notifier").css({
+                        "right": "-100",
+                        "visibility": "hidden"
+                    });
+                }
+                setTimeout(hide, 2000);
+            });
+        });
+    </script>
 </head>
 
 <body>
+    <div class="notifier"><i class="fa fa-check-circle " aria-hidden="true"></i> Updated</div>
     <h1>Settings</h1>
     <fieldset>
         <legend>Proflie</legend>
@@ -96,7 +136,7 @@
             </p>
         </div>
     </fieldset>
-    <fieldset>
+    <fieldset disabled>
         <legend>Audio Quality</legend>
         <div id="strm">
             <label for="st">Streaming</label>
@@ -104,15 +144,19 @@
             <option value="Low">Low</option>
             <option value="Normal" selected>Normal</option>
             <option value="High">High</option>
-        </select><br><br><input type="checkbox"> Datasaver&nbsp; <span class="smalltxt">listen in low network</span>
+        </select><br><br><input type="checkbox"> <label>Datasaver</label>&nbsp; <span class="smalltxt">Listen in low network</span>
         </div>
     </fieldset>
     <fieldset>
         <legend>Playback</legend>
         <div id="plb">
-            <input id='aplay' type="checkbox"> AutoPlay &nbsp;&nbsp;<span class="smalltxt">Play next track automatically</span>
+            <input id='aplay' type="checkbox"><label>AutoPlay </label>&nbsp;&nbsp;<span class="smalltxt">Play next track automatically</span>
             <br><br>
-            <input id='aplay' type="checkbox"> Normalize Volume &nbsp;&nbsp;<span class='smalltxt'>Set same volume level for all tracks</span>
+            <input id='aplay' type="checkbox"><label>Normalize Volume</label> &nbsp;&nbsp;
+            <span class='smalltxt'>Set same volume level for all tracks(Recommended)</span>
+            <br><br>
+            <input id='aplay' type="checkbox"><label>Auto adjust volume</label> &nbsp;&nbsp;
+            <span class="smalltxt">Decreases volume level if you're listening longer(Recommended)</span>
         </div>
     </fieldset>
     <fieldset id="abo">

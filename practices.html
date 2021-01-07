@@ -10,6 +10,43 @@
 
     <script>
         $(document).ready(function() {
+            //sec10
+            $(".appendbutton").click(function() {
+                var lst = $("#orderlist");
+                lst.append("<li style='color:green'>item" + (lst.find('li').length + 1) + "</li>");
+                // $("<li>item " + (lst.find('li').length + 1) + "</li>").appendTo("#orderlist"); (second method)
+            });
+            $(".prependbutton").click(function() {
+                var lst = $("#orderlist");
+                lst.find('li').each(function(i, e) {
+                    $(e).text($(this).text().match(/\D+/) + (Number($(this).text().match(/\d+/)) + 1));
+                });
+                lst.prepend("<li style='color:green'>item1</li>");
+
+            });
+            $('.removebutton').click(function() {
+                $("#orderlist li:last").remove();
+            });
+            $(".wbutton").click(function() {
+                $("#orderlist").wrap("<div id='wrapper' />");
+            });
+            $(".stbutton").click(function() {
+                $("ul").toggleClass("stylelist");
+            });
+            //sec9
+            $("#loadimg").click(function() {
+                $.ajax({
+
+                    url: "http://25.io/toau/audio/sample.txt",
+
+                    success: function(result) {
+                        $(".sec9-div1").html(result);
+                    },
+                    error: function(x, y, z) {
+                        console.log(x, y, z);
+                    }
+                });
+            });
             //sec-8 code
             var sec8 = $("[id^=sec8-]");
 
@@ -326,17 +363,17 @@
         }
         
         .modal {
-            position: absolute;
+            position: fixed;
+            top: 0;
             margin: auto;
             display: none;
             /* Hidden by default */
             z-index: 3;
             /* Sit on top */
-            left: 30%;
-            top: 0;
-            width: 50vw;
+            left: 24%;
+            width: 700px;
             /* Full width */
-            height: 50vw;
+            height: 700px;
             /* Full height */
             overflow: hidden;
             /* Enable scroll if needed */
@@ -388,7 +425,6 @@
         .modal-content {
             background-color: white;
             margin: auto;
-            top: 10%;
             width: 0.1vw;
             box-shadow: 0 4px 8px 0 #5A8A91;
         }
@@ -468,10 +504,17 @@
             transform: scale(0.95);
         }
         
-        #sec8 {
+        #sec8,
+        #sec9,
+        #sec10 {
             position: relative;
             text-align: center;
             height: auto;
+        }
+        
+        ul li {
+            list-style-type: none;
+            transition: smooth .1s;
         }
         
         [id^=sec8-] {
@@ -499,10 +542,55 @@
         button:not(#formloginbutton):active {
             transform: scale(0.9);
         }
+        
+        .sec9-div1 {
+            height: auto;
+            width: auto;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+        
+        #wrapper {
+            height: auto;
+            border: 2px solid black;
+            margin: 10px;
+            border-radius: 1000px;
+        }
+        
+        #orderlist {
+            transition: .1s;
+        }
+        
+        .stylelist {
+            color: #b2e7e3c4;
+            font-size: 20px;
+        }
     </style>
 </head>
 
 <body>
+    <section id="sec10">
+
+
+        <button class="appendbutton">append an item</button>
+        <button class="prependbutton">prepend an item</button>
+        <button class="removebutton">Remove an item(from end)</button>
+        <button class="wbutton">Wrap list around div</button>
+        <button class="stbutton">Stylish list</button>
+        <br>
+        <ul id="orderlist">
+            <li>Item1</li>
+            <li>ITEM2</li>
+            <li>iTEm3</li>
+        </ul>
+    </section>
+    <hr>
+    <section id="sec9">
+        <button id="loadimg" disabled>Load Image</button>
+        <div class="sec9-div1"></div>
+    </section>
+    <hr>
     <div id="sec8">
         <button id="loadbut">Load</button>
         <button id="stopbut">Stop</button>
@@ -523,7 +611,6 @@
     <hr>
     <div id="id02" class="modal">
         <form action="detail.html" method="GET" class="modal-content anima" oninput="return checkPassword(this)" style="width:500px; height:620px;">
-
             <div class="contains">
                 <label for="uname1"><b>Username</b></label>
                 <input id="getfoc" class="formlogintextbox" type="text" placeholder="Enter Username" name="uname1" required>
